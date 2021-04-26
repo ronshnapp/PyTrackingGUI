@@ -3,12 +3,12 @@ General:
 
 This is a simple python based GUI used for manually tracking objects in series of images.
 
-To use it, you'll need to have Python3 working on your PC along with Tkinter (using the anaconda distribution is highly recommended).
+To use it, you'll need to have Python3 working on your PC along with the Tkinter package (using the anaconda distribution is highly recommended).
 
 
 
 
-Instructions:
+Usage instructions:
 =============
 
 Run gui1.py through python. Then:
