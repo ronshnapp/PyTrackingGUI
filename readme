@@ -1,0 +1,32 @@
+General:
+========
+
+This is a simple python based GUI used for manually tracking objects in series of images.
+
+To use it, you'll need to have Python3 working on your PC along with Tkinter (using the anaconda distribution is highly recommended).
+
+
+
+
+Instructions:
+=============
+
+Run gui1.py through python. Then:
+
+1) choose a series of images with an object to track through "select files"  
+2) use the buttons/arrow keys to navigate, and +/- keys to zoom in or out
+3) for each image, click the object you are tracking
+4) save the results (object's coordinates) as tab separated vaues
+
+Important warning - don't drink and track!
+
+
+
+
+Info:
+=====
+
+first initiated: Dec. 2015
+last updated: Apr. 2021
+by Ron Shnapp
+
