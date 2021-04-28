@@ -33,6 +33,8 @@ def nextIm():
         board.image = new_bird
         canvas.delete('all')
         canvas.create_image(0, 0, image=new_bird, anchor='nw')
+        mark_points()
+        
         imName.configure(text=str((i)%len(imagelist)+1)+'/'+str(len(imagelist))+' : '+imagelist[i%len(imagelist)])    
     
 def prevIm():
@@ -50,6 +52,8 @@ def prevIm():
         board.image = new_bird
         canvas.delete('all')
         canvas.create_image(0, 0, image=new_bird, anchor='nw')
+        mark_points()
+        
         imName.configure(text=str((i)%len(imagelist)+1)+'/'+str(len(imagelist))+' : '+imagelist[i%len(imagelist)])  
 
 def goto():
@@ -95,6 +99,7 @@ def zoomIn(event):
     canvas.delete('all')
     canvas.create_image(0, 0, image=new_bird, anchor='nw')
     imName.configure(text=str((i)%len(imagelist)+1)+'/'+str(len(imagelist))+' : '+imagelist[i%len(imagelist)])  
+    mark_points()
 
     
 def zoomOut(event):
@@ -112,7 +117,9 @@ def zoomOut(event):
     canvas.delete('all')
     canvas.create_image(0, 0, image=new_bird, anchor='nw')
     imName.configure(text=str((i)%len(imagelist)+1)+'/'+str(len(imagelist))+' : '+imagelist[i%len(imagelist)])
-
+    mark_points()
+    
+    
 def location_handler(event):
     '''handling the location of the mouse pointer'''
     global i
@@ -120,21 +127,22 @@ def location_handler(event):
     global imagelist
     #x,y = int(event.x/z), int(event.y/z)
     
-    x = canvas.canvasx(event.x) + int(hbar.get()[1])
-    y = canvas.canvasy(event.y) + int(vbar.get()[1])
+    x = int(canvas.canvasx(event.x)/z) + int(hbar.get()[1])
+    y = int(canvas.canvasy(event.y)/z) + int(vbar.get()[1])
     
     Xloc.configure(text = x) 
     Yloc.configure(text = y)
     tracking_dic[i%len(imagelist)]=(x,y)
+    mark_points()
     print( x,y )
     
 
 def motion(event):
     '''handling the location of the mouse pointer'''
     #x, y = int(event.x/z), int(event.y/z)
-    x = canvas.canvasx(event.x) + int(hbar.get()[1])
-    y = canvas.canvasy(event.y) + int(vbar.get()[1])
-    Mousepos.configure(text = '({}, {})'.format(x, y))   
+    x = int(canvas.canvasx(event.x)/z) + int(hbar.get()[1])
+    y = int(canvas.canvasy(event.y)/z) + int(vbar.get()[1])
+    Mousepos.configure(text = '(%d, %d)'%(x, y))   
 
    
 def set_imagelist():
@@ -146,10 +154,34 @@ def set_imagelist():
     if len(imagelist) > 0:
         nextIm()
 
+
+def mark_points():
+    '''Puts crosses on the location of saves trajectory points'''
+    global tracking_dic
+    global z
+    global point_markers
+    
+    for c in point_markers:
+        canvas.delete(c)
+    
+    for k in tracking_dic.keys():
+        x_,y_ = tracking_dic[k]
+        x_ = int(x_*z) - int(hbar.get()[1])
+        y_ = int(y_*z) - int(vbar.get()[1])
+        c1 = canvas.create_line(x_-4, y_, x_+4, y_, fill="#e31010", width=1)
+        c2 = canvas.create_line(x_, y_-4, x_, y_+4, fill="#e31010", width=1)
+        point_markers.append(c1)
+        point_markers.append(c2)
+
+
 def clear():
     '''clear trajectory data'''
     global tracking_dic
+    global point_markers
+    
     tracking_dic = {}
+    for c in point_markers:
+        canvas.delete(c)
 
 def save():
     '''save trajectory data'''
@@ -184,6 +216,7 @@ if __name__ == '__main__':
     root.title('Traking')
     
     tracking_dic = {}
+    point_markers = []
     
     image = Image.open(imagelist[i])
     photo = ImageTk.PhotoImage(image)
