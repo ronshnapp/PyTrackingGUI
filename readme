@@ -1,5 +1,4 @@
-General:
-========
+# PyTrackingGUI: a manual image tracking GUI
 
 This is a simple python based GUI used for manually tracking objects in series of images.
 
@@ -8,8 +7,7 @@ To use it, you'll need to have Python3 working on your PC along with the Tkinter
 
 
 
-Usage instructions:
-=============
+## Usage instructions:
 
 Run gui1.py through python. Then:
 
@@ -23,8 +21,7 @@ Important warning - don't drink and track!
 
 
 
-Info:
-=====
+## meta
 
 first initiated: Dec. 2015
 last updated: Apr. 2021
